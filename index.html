@@ -62,17 +62,72 @@
             font-weight: bold;
             background-color: #f5f5f5;
             border-bottom: 3px solid #aabce9;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
         .course-vishva {
             text-align: center;
             color: #e21111;
-            padding: 20px 10px;
+            padding: 10px 10px;
             font-size: 32px;
             font-weight: bold;
             background-color: #f5f5f5;
             margin-bottom: 10px;
+        }
+
+        /* Exam dates styling */
+        .exam-dates {
+            text-align: center;
+            background-color: #fff1d6;
+            padding: 15px;
+            margin: 0 auto 20px;
+            max-width: 600px;
+            border-radius: 8px;
+            border-left: 5px solid #ff9800;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .exam-dates h3 {
+            color: #d32f2f;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .exam-dates p {
+            font-weight: bold;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        /* Exam info styling */
+        .exam-info {
+            text-align: left;
+            background-color: #e3f2fd;
+            padding: 15px;
+            margin: 0 auto 20px;
+            max-width: 600px;
+            border-radius: 8px;
+            border-left: 5px solid #2196f3;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .exam-info h3 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .exam-info p {
+            margin: 8px 0;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .important-note {
+            font-weight: bold;
+            color: #d32f2f;
+            margin-top: 10px;
         }
 
         .assignment-link {
@@ -242,6 +297,19 @@
             .search-container {
                 max-width: 90%;
             }
+            
+            .exam-dates, .exam-info {
+                max-width: 90%;
+                padding: 10px;
+            }
+            
+            .exam-dates h3, .exam-info h3 {
+                font-size: 16px;
+            }
+            
+            .exam-dates p, .exam-info p {
+                font-size: 14px;
+            }
         }
         
         @media (max-width: 600px) {
@@ -288,6 +356,14 @@
             .copyright {
                 font-size: 12px;
             }
+            
+            .exam-dates h3, .exam-info h3 {
+                font-size: 15px;
+            }
+            
+            .exam-dates p, .exam-info p {
+                font-size: 13px;
+            }
         }
         
         a {
@@ -309,6 +385,25 @@
     
     <h1 class="course-title">Forest And Their Management</h1>
     <h2 class="course-vishva">Vishva S A - 23MIS0420</h2>
+    
+    <!-- Exam dates section -->
+    <div class="exam-dates">
+        <h3>Important Exam Dates:</h3>
+        <p>19-Apr-2025 Saturday</p>
+        <p>20-Apr-2025 Sunday</p>
+        <p>26-Apr-2025 Saturday</p>
+    </div>
+    
+    <!-- Exam information section -->
+    <div class="exam-info">
+        <h3>Exam & Grading Information</h3>
+        <p><strong>Assignment Score:</strong> 25% of average of best 8 assignments out of the total 12 assignments given in the course.</p>
+        <p><strong>Exam Score:</strong> 75% of the proctored certification exam score out of 100.</p>
+        <p><strong>Final Score:</strong> Average assignment score + Exam score</p>
+        <p><strong>Exam Pattern:</strong> 100 X 1 = 100 Marks or 50 X 2 = 100 Marks</p>
+        <p class="important-note">Important: Please bring your Hall Ticket and Aadhaar Card Print out for the exam.</p>
+    </div>
+    
     <div class="assignment-link">
         <a href="https://drive.google.com/drive/folders/1yPt-1cRRGWNn_eOE3zjq_yHuIIasGBtA?usp=drive_link" target="_blank">Click here to view the answers</a>
     </div>
