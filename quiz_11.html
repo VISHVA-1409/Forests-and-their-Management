@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conservation and Forestry Policy Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5e2e;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #2c5e2e;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        h2 {
+      color: #e32b12;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            background-color: #2c5e2e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #224a24;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Conservation and Forestry Policy Quiz 11</h1>
+        <h2>Vishva S A  23MIS0420</h2>
+        <div id="quiz">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        <button id="submit-btn">Submit Quiz</button>
+        <div class="score-display" id="score-display"></div>
+    </div>
+
+    <script>
+        // Quiz questions and answers
+        const quizQuestions = [
+            {
+                question: "Planting along canal banks is a part of",
+                options: ["farm forestry", "community forestry", "extension forestry", "agroforestry"],
+                correctAnswer: "extension forestry"
+            },
+            {
+                question: "Captive breeding is an example of",
+                options: ["in-situ conservation", "ex-situ conservation", "in-situ preservation", "ex-situ preservation"],
+                correctAnswer: "ex-situ conservation"
+            },
+            {
+                question: "The tiger has a home range of several square kilometres, regulates the ecosystem through controlling herbivore populations and trophic cascades, and people come to tiger reserves to watch tigers. Thus, the tiger can be called as",
+                options: ["umbrella species", "keystone species", "flagship species", "all of the above"],
+                correctAnswer: "all of the above"
+            },
+            {
+                question: "Sustainable harvest of resources falls under the category of:",
+                options: ["conservation", "preservation", "environmentalism", "none of the above"],
+                correctAnswer: "conservation"
+            },
+            {
+                question: "The elephant has a home range of several square kilometres, regulates the ecosystem by its habit of destructive feeding, and people can relate to this animal which is important for conservation. Given this background, the elephant can be called as",
+                options: ["umbrella species", "keystone species", "flagship species", "all of the above"],
+                correctAnswer: "all of the above"
+            },
+            {
+                question: "People come to Sessa orchid sanctuary in Arunachal Pradesh to witness orchids, which in this context would be classified as",
+                options: ["umbrella species", "keystone species", "flagship species", "extinct species"],
+                correctAnswer: "flagship species"
+            },
+            {
+                question: "We prefer those areas for the creation of a conservation reserve where the level of threat is",
+                options: ["very high", "medium", "very low", "non-existent"],
+                correctAnswer: "medium"
+            },
+            {
+                question: "Which of these is not a forest classification as per the 1894 Forest Policy:",
+                options: ["protection forest", "production forest", "minor forest", "major forest"],
+                correctAnswer: "major forest"
+            },
+            {
+                question: "\"Science of relationships between organisms and their environments\" is the definition of:",
+                options: ["conservation", "preservation", "environmentalism", "ecology"],
+                correctAnswer: "ecology"
+            },
+            {
+                question: "In 1931, Van Panchayats were constituted in areas that are now in",
+                options: ["Tamil Nadu", "Madhya Pradesh", "West Bengal", "Uttarakhand"],
+                correctAnswer: "Uttarakhand"
+            }
+        ];
+
+        // Generate quiz HTML
+        function generateQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `question-${index}`;
+
+                questionDiv.innerHTML = `
+                    <h3>${index + 1}. ${q.question}</h3>
+                    <div class="options">
+                        ${q.options.map((option, i) => `
+                            <label>
+                                <input type="radio" name="question${index}" value="${option}">
+                                ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Validate answers
+        function validateQuiz() {
+            let score = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                
+                if (!selectedOption) {
+                    feedbackDiv.innerHTML = "Please select an answer.";
+                    feedbackDiv.className = "feedback incorrect";
+                    feedbackDiv.style.display = "block";
+                    return;
+                }
+                
+                if (selectedOption.value === q.correctAnswer) {
+                    score++;
+                    feedbackDiv.innerHTML = "Correct!";
+                    feedbackDiv.className = "feedback correct";
+                } else {
+                    feedbackDiv.innerHTML = `Incorrect. The correct answer is: ${q.correctAnswer}`;
+                    feedbackDiv.className = "feedback incorrect";
+                }
+                
+                feedbackDiv.style.display = "block";
+            });
+            
+            document.getElementById('score-display').textContent = `Your Score: ${score} out of ${quizQuestions.length}`;
+        }
+
+        // Initialize quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            generateQuiz();
+            document.getElementById('submit-btn').addEventListener('click', validateQuiz);
+        });
+    </script>
+</body>
+</html>

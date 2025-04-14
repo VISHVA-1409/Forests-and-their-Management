@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Mensuration MCQ Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+        }
+        .question-container {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin-bottom: 5px;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .incorrect {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #2e7d32;
+        }
+        .reset-btn {
+            background-color: #f44336;
+        }
+        .reset-btn:hover {
+            background-color: #d32f2f;
+        }
+        h2 {
+      color: #e32b12;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Forest Mensuration Quiz 4</h1>
+        <h2>Vishva S A  23MIS0420</h2>
+        <div id="quiz"></div>
+        <button id="submit" type="button">Submit Answers</button>
+        <button id="reset" type="button" class="reset-btn" style="display: none;">Reset Quiz</button>
+        <div class="score-display" id="score"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "For absolute form factor, the reference for the base of the cylinder is",
+                options: ["base of the tree", "breast height", "10% of tree height", "20% of tree height"],
+                correctAnswer: "base of the tree"
+            },
+            {
+                question: "For normal form factor, the reference for the base of the cylinder is",
+                options: ["base of the tree", "breast height", "10% of tree height", "20% of tree height"],
+                correctAnswer: "10% of tree height"
+            },
+            {
+                question: "In India, the breast height is considered to be",
+                options: ["1.37 m", "1.47 m", "1.57 m", "2.47 m"],
+                correctAnswer: "1.37 m"
+            },
+            {
+                question: "Measurement of height based on similar triangles comes under:",
+                options: ["similar measurement", "dissimilar measurement", "direct measurement", "indirect measurement"],
+                correctAnswer: "indirect measurement"
+            },
+            {
+                question: "For a tree with dbh = 45.6 cm, height = 27 m and total stem volume of 1.78 cum, the artificial form factor for the tree is:",
+                options: ["0.1", "0.2", "0.3", "0.4"],
+                correctAnswer: "0.4"
+            },
+            {
+                question: "Consider a stand of eucalyptus trees that are on average 30 cm in diameter and spaced on a regular 3 m grid. Find the spacing factor.",
+                options: ["5", "10", "15", "data insufficient"],
+                correctAnswer: "10"
+            },
+            {
+                question: "Diameter over bark (dob), diameter under bark (dub) and bark thickness (tb) are related as:",
+                options: ["dob = dub + tb", "dob = dub - tb", "dob = dub + 2 × tb", "dob = dub - 2 × tb"],
+                correctAnswer: "dob = dub + 2 × tb"
+            },
+            {
+                question: "For false form factor, the reference for the base of the cylinder is",
+                options: ["base of the tree", "breast height", "10% of tree height", "20% of tree height"],
+                correctAnswer: "breast height"
+            },
+            {
+                question: "Choose the correct statement:",
+                options: [
+                    "For a non-circular cross-section, girth tape over-estimates the sectional area.",
+                    "For a non-circular cross-section, girth tape under-estimates the sectional area.",
+                    "For a non-circular cross-section, girth tape correctly estimates the sectional area.",
+                    "None of these is a correct statement."
+                ],
+                correctAnswer: "For a non-circular cross-section, girth tape over-estimates the sectional area."
+            },
+            {
+                question: "A tree has dbh of 25 cm. Find its basal area in sq m.",
+                options: [".049", ".096", ".149", ".195"],
+                correctAnswer: ".049"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit');
+        const resetButton = document.getElementById('reset');
+        const scoreDisplay = document.getElementById('score');
+        
+        function buildQuiz() {
+            const output = [];
+            
+            quizData.forEach((question, questionIndex) => {
+                const options = [];
+                
+                for (let i = 0; i < question.options.length; i++) {
+                    options.push(
+                        `<div class="option">
+                            <input type="radio" id="question${questionIndex}option${i}" name="question${questionIndex}" value="${question.options[i]}">
+                            <label for="question${questionIndex}option${i}">${question.options[i]}</label>
+                        </div>`
+                    );
+                }
+                
+                output.push(
+                    `<div class="question-container">
+                        <div class="question">${questionIndex + 1}. ${question.question}</div>
+                        <div class="options">${options.join('')}</div>
+                        <div class="feedback" id="feedback${questionIndex}"></div>
+                    </div>`
+                );
+            });
+            
+            quizContainer.innerHTML = output.join('');
+        }
+        
+        function showResults() {
+            const answerContainers = quizContainer.querySelectorAll('.question-container');
+            let score = 0;
+            
+            quizData.forEach((question, questionIndex) => {
+                const answerContainer = answerContainers[questionIndex];
+                const selector = `input[name=question${questionIndex}]:checked`;
+                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                const feedbackDiv = document.getElementById(`feedback${questionIndex}`);
+                
+                if (userAnswer === question.correctAnswer) {
+                    score++;
+                    feedbackDiv.innerHTML = `Yes, the answer is correct. Score: ${score}<br>Accepted Answer:<br><em>${question.correctAnswer}</em><br><strong>1 point</strong>`;
+                    feedbackDiv.className = 'feedback correct';
+                } else {
+                    feedbackDiv.innerHTML = `Incorrect. The correct answer is:<br><em>${question.correctAnswer}</em>`;
+                    feedbackDiv.className = 'feedback incorrect';
+                }
+                
+                feedbackDiv.style.display = 'block';
+            });
+            
+            scoreDisplay.innerHTML = `Final Score: ${score} out of ${quizData.length}`;
+            submitButton.style.display = 'none';
+            resetButton.style.display = 'block';
+        }
+        
+        function resetQuiz() {
+            // Clear all selections
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(button => button.checked = false);
+            
+            // Hide feedback
+            const feedbackDivs = document.querySelectorAll('.feedback');
+            feedbackDivs.forEach(div => div.style.display = 'none');
+            
+            // Reset score display
+            scoreDisplay.innerHTML = '';
+            
+            // Show submit button, hide reset button
+            submitButton.style.display = 'block';
+            resetButton.style.display = 'none';
+        }
+        
+        // Initial build
+        buildQuiz();
+        
+        // Event listeners
+        submitButton.addEventListener('click', showResults);
+        resetButton.addEventListener('click', resetQuiz);
+    </script>
+</body>
+</html>

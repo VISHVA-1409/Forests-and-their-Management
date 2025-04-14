@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest And Their Management</title>
+    <!-- Add favicon link - this will replace the globe icon in the browser tab -->
+    <link rel="icon" href="vishva.jpg" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header Styles - Modified for four logos */
+        .header {
+            width: 100%;
+            background: linear-gradient(135deg, #8ce2af 0%, #9b90d8 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+            margin: 5px 10px;
+        }
+        
+        .header-title {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .course-title {
+            text-align: center;
+            color: #1a4d2e;
+            padding: 20px 10px;
+            font-size: 32px;
+            font-weight: bold;
+            background-color: #f5f5f5;
+            border-bottom: 3px solid #aabce9;
+            margin-bottom: 30px;
+        }
+        
+        .course-vishva {
+            text-align: center;
+            color: #e21111;
+            padding: 20px 10px;
+            font-size: 32px;
+            font-weight: bold;
+            background-color: #f5f5f5;
+            margin-bottom: 10px;
+        }
+
+        .assignment-link {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .assignment-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1a4d2e;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .assignment-link a:hover {
+            background-color: #ff9800;
+            transform: scale(1.05);
+        }
+        
+        /* Search functionality */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 20px;
+            max-width: 500px;
+            padding: 0 15px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 25px;
+            padding: 5px 15px;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        .search-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        #searchInput {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-size: 16px;
+            padding: 8px 0;
+        }
+        
+        /* Quiz Grid Layout */
+        .quiz-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 10px 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-grow: 1;
+        }
+        
+        /* Quiz Circle Styles */
+        .quiz-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .quiz-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .quiz-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #2c7744;
+            position: relative;
+            background-color: #ffffff;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-circle:hover {
+            border-color: #ff9800;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .quiz-circle img {
+            width: 80%;
+            height: auto;
+        }
+        
+        .quiz-title {
+            color: #1a4d2e;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .quiz-item:hover .quiz-title {
+            color: #ff9800;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, #1a4d2e 0%, #2c7744 100%);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .copyright {
+            font-size: 16px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 26px;
+                padding: 15px 10px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .header-title {
+                font-size: 20px;
+            }
+            
+            .quiz-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 20px;
+                padding: 10px 15px 30px;
+            }
+            
+            .quiz-circle {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .quiz-title {
+                font-size: 18px;
+            }
+            
+            .copyright {
+                font-size: 14px;
+            }
+            
+            .search-container {
+                max-width: 90%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .quiz-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .course-title {
+                font-size: 22px;
+                padding: 12px 5px;
+            }
+            
+            .logo {
+                height: 40px;
+            }
+            
+            .header-title {
+                font-size: 18px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .quiz-container {
+                grid-template-columns: 1fr; /* Changed to single column for smallest screens */
+                gap: 15px;
+                padding: 5px 10px 20px;
+            }
+            
+            .quiz-circle {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .quiz-title {
+                font-size: 16px;
+            }
+            
+            .copyright {
+                font-size: 12px;
+            }
+        }
+        
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modified header with four logos -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="1.png" alt="Forest Management Logo 1" class="logo">
+            <img src="2.png" alt="Forest Management Logo 2" class="logo">
+            <img src="3.png" alt="Forest Management Logo 3" class="logo">
+            <img src="vishva.jpg" alt="Forest Management Logo 4" class="logo">
+        </div>
+        
+    </header>
+    
+    <h1 class="course-title">Forest And Their Management</h1>
+    <h2 class="course-vishva">Vishva S A - 23MIS0420</h2>
+    <div class="assignment-link">
+        <a href="https://drive.google.com/drive/folders/1yPt-1cRRGWNn_eOE3zjq_yHuIIasGBtA?usp=drive_link" target="_blank">Click here to view the answers</a>
+    </div>
+    
+    <!-- Search functionality -->
+    <div class="search-container">
+        <div class="search-bar">
+            <img src="nptel.png" alt="Search Logo" class="search-logo">
+            <input type="text" id="searchInput" placeholder="Search quizzes...">
+        </div>
+    </div>
+    
+    <div class="quiz-container">
+        <!-- Quiz 1 -->
+        <a href="quiz_1.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 1">
+            </div>
+            <h2 class="quiz-title">Quiz 1</h2>
+        </a>
+        
+        <!-- Quiz 2 -->
+        <a href="quiz_2.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 2">
+            </div>
+            <h2 class="quiz-title">Quiz 2</h2>
+        </a>
+        
+        <!-- Quiz 3 -->
+        <a href="quiz_3.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 3">
+            </div>
+            <h2 class="quiz-title">Quiz 3</h2>
+        </a>
+        
+        <!-- Quiz 4 -->
+        <a href="quiz_4.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 4">
+            </div>
+            <h2 class="quiz-title">Quiz 4</h2>
+        </a>
+        
+        <!-- Quiz 5 -->
+        <a href="quiz_5.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 5">
+            </div>
+            <h2 class="quiz-title">Quiz 5</h2>
+        </a>
+        
+        <!-- Quiz 6 -->
+        <a href="quiz_6.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 6">
+            </div>
+            <h2 class="quiz-title">Quiz 6</h2>
+        </a>
+        
+        <!-- Quiz 7 -->
+        <a href="quiz_7.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 7">
+            </div>
+            <h2 class="quiz-title">Quiz 7</h2>
+        </a>
+        
+        <!-- Quiz 8 -->
+        <a href="quiz_8.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 8">
+            </div>
+            <h2 class="quiz-title">Quiz 8</h2>
+        </a>
+        
+        <!-- Quiz 9 -->
+        <a href="quiz_9.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 9">
+            </div>
+            <h2 class="quiz-title">Quiz 9</h2>
+        </a>
+        
+        <!-- Quiz 10 -->
+        <a href="quiz_10.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 10">
+            </div>
+            <h2 class="quiz-title">Quiz 10</h2>
+        </a>
+        
+        <!-- Quiz 11 -->
+        <a href="quiz_11.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 11">
+            </div>
+            <h2 class="quiz-title">Quiz 11</h2>
+        </a>
+        
+        <!-- Quiz 12 -->
+        <a href="quiz_12.html" class="quiz-item">
+            <div class="quiz-circle">
+                <img src="nptel.png" alt="Forest Quiz 12">
+            </div>
+            <h2 class="quiz-title">Quiz 12</h2>
+        </a>
+    </div>
+    
+    <!-- Footer with copyright -->
+    <footer class="footer">
+        <p class="copyright">Copyright © 2025 Software Development, vishvatech.online, Gudiyattam 632-602.</p>
+    </footer>
+    
+    <!-- Search functionality script -->
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const quizItems = document.querySelectorAll('.quiz-item');
+            
+            quizItems.forEach(item => {
+                const title = item.querySelector('.quiz-title').textContent.toLowerCase();
+                if (title.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

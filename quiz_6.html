@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forest Protection Quiz 6</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    
+    h1 {
+      color: #2e7d32;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #e32b12;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .quiz-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .question {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin: 15px 0;
+      padding: 20px;
+    }
+    
+    .question h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .options {
+      margin-top: 15px;
+    }
+    
+    .option {
+      display: block;
+      margin: 10px 0;
+    }
+    
+    .feedback {
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 5px;
+    }
+    
+    .correct {
+      background-color: #e8f5e9;
+      border-left: 5px solid #4caf50;
+      color: #2e7d32;
+    }
+    
+    .incorrect {
+      background-color: #ffebee;
+      border-left: 5px solid #f44336;
+      color: #c62828;
+    }
+    
+    button {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      margin-right: 10px;
+    }
+    
+    button:hover {
+      background-color: #1b5e20;
+    }
+    
+    .reset-btn {
+      background-color: #f44336;
+    }
+    
+    .reset-btn:hover {
+      background-color: #d32f2f;
+    }
+    
+    .score-display {
+      text-align: center;
+      font-size: 18px;
+      color: #2e7d32;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    
+    .answer-text {
+      font-style: italic;
+    }
+    
+    .point-text {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Forest Protection Quiz 6</h1>
+    <h2>Vishva S A  23MIS0420</h2>
+    <div id="quiz"></div>
+    <button id="submit" type="button">Submit Answers</button>
+    <button id="reset" type="button" class="reset-btn" style="display: none;">Reset Quiz</button>
+    <div class="score-display" id="score"></div>
+  </div>
+  
+  <script>
+    const quizData = [
+      {
+        question: "Invasive climbers increase the probability of which of these fire types?",
+        options: ["ground fire", "surface fire", "ladder fire", "firestorm"],
+        correctAnswer: "ladder fire"
+      },
+      {
+        question: "Which of these forms the fire triangle?",
+        options: ["fire, air, heat", "fire, oxygen, wood", "fuel, air, wood", "fuel, oxygen, heat"],
+        correctAnswer: "fuel, oxygen, heat"
+      },
+      {
+        question: "A scientist uses a trap to capture a monkey. In the context of Wildlife Protection Act 1972,",
+        options: [
+          "the trap is a weapon and capturing is hunting.",
+          "the trap is not a weapon and capturing is hunting.",
+          "the trap is a weapon and capturing is not hunting.",
+          "the trap is not a weapon and capturing is not hunting."
+        ],
+        correctAnswer: "the trap is a weapon and capturing is hunting."
+      },
+      {
+        question: "In the formula I = PXAXT, P refers to",
+        options: ["professional pressure", "pollution pressure", "population pressure", "none of the above"],
+        correctAnswer: "population pressure"
+      },
+      {
+        question: "In the formula I = PXAXT, T refers to",
+        options: ["transference", "time", "technology", "none of the above"],
+        correctAnswer: "technology"
+      },
+      {
+        question: "Which of these is a stochastic factor?",
+        options: ["birth rate", "death rate", "population structure", "forest fire"],
+        correctAnswer: "forest fire"
+      },
+      {
+        question: "The acronym HIPPO does not include",
+        options: ["habitat loss", "habitat enhancement", "over-harvesting", "human over-population"],
+        correctAnswer: "habitat enhancement"
+      },
+      {
+        question: "A veterinarian uses an immobilising gun to capture a deer. In the context of Wildlife Protection Act 1972,",
+        options: [
+          "the immobilising gun is a weapon and capturing is hunting.",
+          "the immobilising gun is not a weapon and capturing is hunting.",
+          "the immobilising gun is a weapon and capturing is not hunting.",
+          "the immobilising gun is not a weapon and capturing is not hunting."
+        ],
+        correctAnswer: "the immobilising gun is a weapon and capturing is hunting."
+      },
+      {
+        question: "Which of these is a deterministic factor?",
+        options: ["environmental variation", "forest fire", "death rate", "diseases"],
+        correctAnswer: "death rate"
+      },
+      {
+        question: "The acronym HIPPO does not include",
+        options: ["habitat loss", "invasive species", "pollination", "pollution"],
+        correctAnswer: "pollination"
+      }
+    ];
+
+    const quizContainer = document.getElementById('quiz');
+    const submitButton = document.getElementById('submit');
+    const resetButton = document.getElementById('reset');
+    const scoreDisplay = document.getElementById('score');
+    
+    // Build quiz function
+    function buildQuiz() {
+      // Clear quiz container
+      quizContainer.innerHTML = '';
+      
+      // For each question...
+      quizData.forEach((quizItem, index) => {
+        // Create question container
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        questionDiv.id = `question-${index}`;
+        
+        // Add question text
+        const questionTitle = document.createElement('h3');
+        questionTitle.textContent = `${index + 1}. ${quizItem.question}`;
+        questionDiv.appendChild(questionTitle);
+        
+        // Add options
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        
+        quizItem.options.forEach((option, optionIndex) => {
+          const label = document.createElement('label');
+          label.className = 'option';
+          
+          const radioBtn = document.createElement('input');
+          radioBtn.type = 'radio';
+          radioBtn.name = `question${index}`;
+          radioBtn.value = option;
+          
+          label.appendChild(radioBtn);
+          label.appendChild(document.createTextNode(` ${option}`));
+          optionsDiv.appendChild(label);
+        });
+        
+        questionDiv.appendChild(optionsDiv);
+        
+        // Add feedback area (initially empty)
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'feedback';
+        feedbackDiv.id = `feedback-${index}`;
+        feedbackDiv.style.display = 'none';
+        questionDiv.appendChild(feedbackDiv);
+        
+        // Add to quiz container
+        quizContainer.appendChild(questionDiv);
+      });
+    }
+    
+    // Check answers function
+    function checkAnswers() {
+      let score = 0;
+      
+      // For each question...
+      quizData.forEach((quizItem, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const feedbackDiv = document.getElementById(`feedback-${index}`);
+        
+        // Reset feedback
+        feedbackDiv.innerHTML = '';
+        feedbackDiv.className = 'feedback';
+        
+        if (!selectedOption) {
+          // No answer selected
+          feedbackDiv.textContent = "Please select an answer.";
+          feedbackDiv.classList.add('incorrect');
+          feedbackDiv.style.display = 'block';
+          return;
+        }
+        
+        const userAnswer = selectedOption.value;
+        const correctAnswer = quizItem.correctAnswer;
+        
+        if (userAnswer === correctAnswer) {
+          // Correct answer
+          score++;
+          feedbackDiv.classList.add('correct');
+          feedbackDiv.innerHTML = `<strong>Yes, the answer is correct. Score: 1</strong><br>
+                                  <span class="answer-text">Accepted Answer:</span><br>
+                                  <em>${correctAnswer}</em><br>
+                                  <span class="point-text">1 point</span>`;
+        } else {
+          // Incorrect answer
+          feedbackDiv.classList.add('incorrect');
+          feedbackDiv.innerHTML = `<strong>Incorrect. The correct answer is:</strong><br>
+                                  <em>${correctAnswer}</em>`;
+        }
+        
+        feedbackDiv.style.display = 'block';
+      });
+      
+      // Show final score
+      scoreDisplay.textContent = `Final Score: ${score} out of ${quizData.length}`;
+      scoreDisplay.style.display = 'block';
+      
+      // Show reset button, hide submit button
+      submitButton.style.display = 'none';
+      resetButton.style.display = 'inline-block';
+      
+      // Disable all radio buttons
+      const allRadios = document.querySelectorAll('input[type="radio"]');
+      allRadios.forEach(radio => {
+        radio.disabled = true;
+      });
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Reset quiz function
+    function resetQuiz() {
+      // Clear all selections
+      const allRadios = document.querySelectorAll('input[type="radio"]');
+      allRadios.forEach(radio => {
+        radio.checked = false;
+        radio.disabled = false;
+      });
+      
+      // Hide all feedback
+      const allFeedback = document.querySelectorAll('.feedback');
+      allFeedback.forEach(feedback => {
+        feedback.style.display = 'none';
+        feedback.innerHTML = '';
+      });
+      
+      // Hide score display
+      scoreDisplay.style.display = 'none';
+      
+      // Show submit button, hide reset button
+      submitButton.style.display = 'inline-block';
+      resetButton.style.display = 'none';
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Initialize quiz
+    buildQuiz();
+    
+    // Event listeners
+    submitButton.addEventListener('click', checkAnswers);
+    resetButton.addEventListener('click', resetQuiz);
+  </script>
+</body>
+</html>

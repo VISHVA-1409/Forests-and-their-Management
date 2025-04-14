@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Forestry Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5e2e;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #2c5e2e;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        h2 {
+      color: #e32b12;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            background-color: #2c5e2e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #224a24;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Advanced Forestry MCQ Quiz 10</h1>
+        <h2>Vishva S A  23MIS0420</h2>
+        <div id="quiz">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        <button id="submit-btn">Submit Quiz</button>
+        <div class="score-display" id="score-display"></div>
+    </div>
+
+    <script>
+        // Quiz questions and answers
+        const quizQuestions = [
+            {
+                question: "Wet and dry treatment of seeds is used for which species",
+                options: ["amla", "mango", "ber", "teak"],
+                correctAnswer: "teak"
+            },
+            {
+                question: "Which of these is not a laboratory method to determine best days for seed collection?",
+                options: ["maximum dry weight", "colour of fruits", "moisture content of fruits", "chemical analysis of fat and nitrogen content"],
+                correctAnswer: "colour of fruits"
+            },
+            {
+                question: "Which of these characterises a refractory site",
+                options: ["soil depth < 10 cm", "soil depth 10-30 cm", "soil depth > 30 cm", "none of these"],
+                correctAnswer: "soil depth < 10 cm"
+            },
+            {
+                question: "Which of these prevents water logging",
+                options: ["sunken bed", "raised bed", "flat bed", "all of these"],
+                correctAnswer: "raised bed"
+            },
+            {
+                question: "Number of seeds in sample that germinate upto the peak germination period expressed as % is a definition of",
+                options: ["germination number", "germination percentage", "germination energy", "germination power"],
+                correctAnswer: "germination energy"
+            },
+            {
+                question: "Which of these conserves moisture",
+                options: ["sunken bed", "raised bed", "flat bed", "all of these"],
+                correctAnswer: "sunken bed"
+            },
+            {
+                question: "Agave is used for",
+                options: ["barbed wire fencing", "live fencing", "chain link fencing", "stone wall fencing"],
+                correctAnswer: "live fencing"
+            },
+            {
+                question: "Shell cracking of seeds is used for which species",
+                options: ["amla", "mango", "ber", "teak"],
+                correctAnswer: "ber"
+            },
+            {
+                question: "Choice of spacing is dependent upon",
+                options: ["objective of plantation", "site-species matching", "growth rate", "all of these"],
+                correctAnswer: "all of these"
+            },
+            {
+                question: "Which of these is a good storage condition",
+                options: ["high moisture, high temperature", "high moisture, low temperature", "low moisture, high temperature", "low moisture, low temperature"],
+                correctAnswer: "low moisture, low temperature"
+            }
+        ];
+
+        // Generate quiz HTML
+        function generateQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `question-${index}`;
+
+                questionDiv.innerHTML = `
+                    <h3>${index + 1}. ${q.question}</h3>
+                    <div class="options">
+                        ${q.options.map((option, i) => `
+                            <label>
+                                <input type="radio" name="question${index}" value="${option}">
+                                ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Validate answers
+        function validateQuiz() {
+            let score = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                
+                if (!selectedOption) {
+                    feedbackDiv.innerHTML = "Please select an answer.";
+                    feedbackDiv.className = "feedback incorrect";
+                    feedbackDiv.style.display = "block";
+                    return;
+                }
+                
+                if (selectedOption.value === q.correctAnswer) {
+                    score++;
+                    feedbackDiv.innerHTML = "Correct!";
+                    feedbackDiv.className = "feedback correct";
+                } else {
+                    feedbackDiv.innerHTML = `Incorrect. The correct answer is: ${q.correctAnswer}`;
+                    feedbackDiv.className = "feedback incorrect";
+                }
+                
+                feedbackDiv.style.display = "block";
+            });
+            
+            document.getElementById('score-display').textContent = `Your Score: ${score} out of ${quizQuestions.length}`;
+        }
+
+        // Initialize quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            generateQuiz();
+            document.getElementById('submit-btn').addEventListener('click', validateQuiz);
+        });
+    </script>
+</body>
+</html>
