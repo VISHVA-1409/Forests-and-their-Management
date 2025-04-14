@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forest And Their Management</title>
-    <!-- Add favicon link - this will replace the globe icon in the browser tab -->
     <link rel="icon" href="vishva.jpg" type="image/png">
     <style>
         * {
@@ -37,7 +36,7 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Changed from wrap to nowrap to keep logos in a row */
         }
         
         .logo {
@@ -317,6 +316,12 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
+            
+            /* Make logos smaller on smaller screens but keep them in a row */
+            .logo {
+                height: 40px;
+                margin: 5px 5px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -326,16 +331,19 @@
             }
             
             .logo {
-                height: 40px;
+                height: 30px; /* Even smaller logos on very small screens */
+                margin: 5px 2px;
             }
             
             .header-title {
                 font-size: 18px;
             }
             
+            /* Keep logos in a row for smallest screens too */
             .logo-container {
-                flex-direction: column;
-                gap: 10px;
+                flex-direction: row; /* Changed from column to row */
+                justify-content: space-around;
+                gap: 0; /* Reduced gap */
             }
             
             .quiz-container {
@@ -372,7 +380,7 @@
     </style>
 </head>
 <body>
-    <!-- Modified header with four logos -->
+    <!-- Header with four logos in a row -->
     <header class="header">
         <div class="logo-container">
             <img src="1.png" alt="Forest Management Logo 1" class="logo">
@@ -380,9 +388,9 @@
             <img src="3.png" alt="Forest Management Logo 3" class="logo">
             <img src="vishva.jpg" alt="Forest Management Logo 4" class="logo">
         </div>
-        
     </header>
     
+    <!-- Rest of the content remains the same -->
     <h1 class="course-title">Forest And Their Management</h1>
     <h2 class="course-vishva">Vishva S A - 23MIS0420</h2>
     
@@ -417,6 +425,7 @@
     </div>
     
     <div class="quiz-container">
+        <!-- Quiz items remain the same -->
         <!-- Quiz 1 -->
         <a href="quiz_1.html" class="quiz-item">
             <div class="quiz-circle">
